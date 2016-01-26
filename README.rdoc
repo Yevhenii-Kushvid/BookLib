@@ -5,24 +5,31 @@ application up and running.
 
 Things you may want to cover:
 
-* Ruby version
+* Ruby version 2.1.5
 
-* System dependencies
+* Rails version 4.2.5
 
 * Configuration
 
-* Database creation
+* Database creation 
+Postgersql -> install into system
 
+config/database/yaml
+  database: <write db name you want for each env.>
+  
+  For each env.
+  username: postgres
+  password: *****
+  
+  host: <localhost for Development and Test env and additional db host name for Production>
+  post: <of db if necessary>
+  
 * Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
+rake db:create
+rake db:migrate
+rake db:seed
 
 * Deployment instructions
+  Heroku Git
 
-* ...
-
-
-Please feel free to use a different markup language if you do not plan to run
 <tt>rake doc:app</tt>.
