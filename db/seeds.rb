@@ -6,11 +6,11 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 genre_list = [
-  [ "Комедия" ],
-  [ "Тагедия" ],
-  [ "Драма" ],
+  "Комедия",
+  "Тагедия",
+  "Драма" ,
 ]
 
 genre_list.each do |name|
-  Country.create( name: name )
+  Genre.create( name: name )
 end
