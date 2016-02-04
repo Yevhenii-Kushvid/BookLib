@@ -1,3 +1,5 @@
+
+
 <div class="row">
 	<div class="col-xs-12">
 		<p id="notice">
@@ -5,7 +7,7 @@
 		</p>
 	</div>
 	<div class="col-xs-12">
-		<h1><strong>Name:</strong> <%= @book.name %> </h1>
+		<h1><%= @book.name %> </h1>
 	</div>
 	<div class="col-xs-12">
 
@@ -56,7 +58,18 @@
 			<div class="btn btn-default">
 				<%= link_to 'Back', books_path %>
 			</div>
+
+			<div class="btn btn-default">
+				<%= link_to 'Add Quote', new_book_quote_path(@book.id) %>
+			</div>
+
+				<div class="row">
+					<div class="col-xs-12">
+						<% @quotes.each do |quote| %>
+							<hr/><%= link_to quote.text,  book_quote_path(@book.id, quote.id) %><hr/>
+						<% end %>
+					</div>
+				</div>
 		</div>
 	</div>
 </div>
-

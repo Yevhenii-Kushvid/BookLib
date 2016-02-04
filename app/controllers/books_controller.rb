@@ -12,6 +12,7 @@ class BooksController < ApplicationController
   # GET /books/1
   # GET /books/1.json
   def show
+
   end
 
   # GET /books/new
@@ -88,6 +89,7 @@ class BooksController < ApplicationController
   def set_book
     begin
       @book = Book.find(params[:id])
+      @quotes = @book.quotes.all
     rescue => ex
       render_500 unless @book
     end
@@ -131,7 +133,6 @@ class BooksController < ApplicationController
 
   def  update_genre_connections
     book_genres = params[:genre]
-
     @genres = Genre.all
 
     @genres.each { |genre|
