@@ -53,10 +53,7 @@ class QuotesController < ApplicationController
         format.json { head :no_content }
       end
     rescue => ex
-      respond_to do |format|
-        format.html { render :show }
-        format.json { render json: @quote.errors, status: :unprocessable_entity }
-      end
+      render_500
     end
   end
 
@@ -67,13 +64,15 @@ class QuotesController < ApplicationController
   end
 
   def set_quote
-      begin
-        @book = Book.find(params[:book_id])
-        @quotes = @book.quotes
-        @quote = @quotes.find(params[:id])
-      rescue => ex
-        render_500 unless @book
-      end
+    @book = Book.find(params[:book_id])
+    @quotes = @book.quotes
+    @quote = @quotes.find(params[:id])
+
+    render_500 unless @book
+  end
+
+  def is_creator(user)
+    self.user == user
   end
 
   def is_creator?
