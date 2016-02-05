@@ -1,6 +1,11 @@
 Rails.application.routes.draw do
   devise_for :users
-  resources :books
+  resources :books do
+    resources :quotes
+  end
+
+  patch '/books/:book_id/quotes', controller: 'quotes', action: :update
+  put '/books/:book_id/quotes', controller: 'quotes', action: :update
 
   root 'books#index'
   get '/panel' => 'panel#index'

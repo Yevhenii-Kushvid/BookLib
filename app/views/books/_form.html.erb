@@ -17,6 +17,8 @@
 	<%= f.label :name %>
 	<br>
 	<%= f.text_field :name %>
+
+
 </div>
 <div class="field">
 	<%= f.label :author %>
@@ -56,8 +58,8 @@
 			<td> <%= genre.name %> </td>
 			<td>
 			<input name="genre[<%= genre.id %>]" type="hidden" value="0" />
-			
-			<input type="checkbox" value="1" name="genre[<%= genre.id %>]" id="genre_is_<%= genre.name %>" 
+
+			<input type="checkbox" value="1" name="genre[<%= genre.id %>]" id="genre_is_<%= genre.name %>"
 			     <%= "checked" if @connections.select {|conn| conn.genre_id == genre.id}.length > 0 %>/>
 			</td>
 		</tr>

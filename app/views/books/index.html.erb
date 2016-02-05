@@ -16,6 +16,7 @@
 		<div class="btn btn-default">
 			<%= link_to 'New Book', new_book_path %>
 		</div>
+
 		<hr/>
 
 		<table class="table">
@@ -26,7 +27,7 @@
 					<tr>
 						<td> <%= link_to book_path(book) do %>
 						<%= image_tag(book.picture, :width=>150) %>
-						<% end %> 
+						<% end %>
 						</td>
 					</tr>
 					<tr>
@@ -44,4 +45,3 @@
 </div>
 
 <br>
-
