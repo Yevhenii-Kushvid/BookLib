@@ -89,7 +89,7 @@ class BooksController < ApplicationController
   def set_book
     begin
       @book = Book.find(params[:id])
-      @quotes = @book.quotes.all
+      @quotes = @book.quotes
     rescue => ex
       render_500 unless @book
     end
@@ -137,7 +137,6 @@ class BooksController < ApplicationController
 
     @genres.each { |genre|
       conns = BookGenre.where(:book_id => @book.id, :genre_id => genre.id)
-      puts "________________________________\n\n\n\n\n\n\n\n\n\n\n"
       conns.each { |e|
         e.destroy
       }
