@@ -18,12 +18,15 @@
 		</div>
 
 		<hr/>
-
+		<div id="books-container">
+		<% counter = 0 %>
 		<table class="table">
 			<% @books.each do |book| %>
+			<% if counter % 4 == 0 %>
 			<tr>
-				<td>
-				<table class="table">
+			<% end %>
+					<td>
+					<table class="table">
 					<tr>
 						<td> <%= link_to book_path(book) do %>
 						<%= image_tag(book.picture, :width=>150) %>
@@ -31,15 +34,21 @@
 						</td>
 					</tr>
 					<tr>
-						<td><%= link_to book_path(book)do %>Name: <%= book.name %><% end %> </td>
+						<td><%= link_to book_path(book)do %><%= book.name %><% end %> </td>
 					</tr>
 					<tr>
 						<td>Author: <%= book.author %></td>
 					</tr>
-				</table><td>
+
+				</table>
+				</td>
+				<% counter = counter + 1 %>
+			<% if counter % 4 == 0 %>
 			</tr>
 			<% end %>
+			<% end %>
 		</table>
+		</div>
 	</div>
 
 </div>
