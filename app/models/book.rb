@@ -2,6 +2,7 @@ class Book < ActiveRecord::Base
   mount_uploader :picture, PictureUploader
 
   has_many :quotes, dependent: :destroy
+  belongs_to :user
 
   validates :name, :presence => true
   validates :author, :presence => true

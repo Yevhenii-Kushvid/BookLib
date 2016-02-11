@@ -1,46 +1,55 @@
 <div class="row">
-  <div>
-    <h1>Listing Books</h1>
-    <hr/>
-    <p id="notice">
-      <%= notice %>
-    </p>
+	<div>
+		<h1>Listing Books</h1>
+		<hr/>
+		<p id="notice">
+			<%= notice %>
+		</p>
 
-  </div>
+	</div>
 </div>
 
 <div class="row">
 
-  <div clas="col-xs-6"></div>
-  <div clas="col-xs-6">
-    <div class="btn btn-default">
-      <%= link_to 'New Book', new_book_path %>
-    </div>
+	<div clas="col-xs-6"></div>
+	<div clas="col-xs-6">
+		<div class="btn btn-default">
+			<%= link_to 'New Book', new_book_path %>
+		</div>
 
-    <hr/>
+		<hr/>
+		<div id="books-container">
+		<% counter = 0 %>
+		<table class="table">
+			<% @books.each do |book| %>
+			<% if counter % 4 == 0 %>
+			<tr>
+			<% end %>
+					<td>
+					<table class="table">
+					<tr>
+						<td> <%= link_to book_path(book) do %>
+						<%= image_tag(book.picture, :width=>150) %>
+						<% end %>
+						</td>
+					</tr>
+					<tr>
+						<td><%= link_to book_path(book)do %><%= book.name %><% end %> </td>
+					</tr>
+					<tr>
+						<td>Author: <%= book.author %></td>
+					</tr>
 
-    <table class="table">
-      <% @books.each do |book| %>
-      <tr>
-        <td>
-        <table class="table">
-          <tr>
-            <td> <%= link_to book_path(book) do %>
-            <%= image_tag(book.picture, :width=>150) %>
-            <% end %>
-            </td>
-          </tr>
-          <tr>
-            <td><%= link_to book_path(book)do %>Name: <%= book.name %><% end %> </td>
-          </tr>
-          <tr>
-            <td>Author: <%= book.author %></td>
-          </tr>
-        </table><td>
-      </tr>
-      <% end %>
-    </table>
-  </div>
+				</table>
+				</td>
+				<% counter = counter + 1 %>
+			<% if counter % 4 == 0 %>
+			</tr>
+			<% end %>
+			<% end %>
+		</table>
+		</div>
+	</div>
 
 </div>
 

@@ -1,6 +1,4 @@
 class QuotesController < ApplicationController
-  #before_action :is_creator?, only: [:edit, :update, :destroy]
-
   def index
     @quotes = Book.find(params[:book_id]).quotes
   end
@@ -10,10 +8,11 @@ class QuotesController < ApplicationController
   end
 
   def new
+    book = Book.find(params[:book_id])
     if book.user == current_user
       @quote = Quote.new
     else
-      render_500
+      redirect_to book_path(book), alert: 'Sorry, but you can`t create quote to this book.'
     end
   end
 
@@ -34,16 +33,16 @@ class QuotesController < ApplicationController
         end
       end
     else
-      render_500
+      redirect_to book_path(book), notice: 'Sorry, but you can`t create quotes to this book.'
     end
   end
 
   def edit
     quote = Quote.find(params[:id])
-    if current_user == quote.user
+    if quote.user == current_user
       @quote = quote
     else
-      render_500
+      redirect_to book_path(book), notice: 'Sorry, but you can`t edit quotes to this book.'
     end
   end
 
@@ -61,29 +60,26 @@ class QuotesController < ApplicationController
         end
       end
     else
-      render_500
+      redirect_to book_path(book), notice: 'Sorry, but you can`t edit quotes to this book.'
     end
   end
 
   def destroy
     @quote = Quote.find(params[:id])
-    if current_user == @quote.user
-      begin
+    if @quote.user == current_user
         book = Book.find(params[:book_id])
         @quote.destroy
         respond_to do |format|
           format.html { redirect_to book_path(book), notice: 'Quote was successfully destroyed.' }
           format.json { head :no_content }
         end
-      rescue => ex
-        render_500
-      end
     else
-      render_500
+      redirect_to book_path(book), notice: 'Sorry, but you can`t delete quotes to this book.'
     end
   end
 
   private
+
   def quote_params
     params[:quote]
   end
