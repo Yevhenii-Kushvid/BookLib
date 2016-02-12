@@ -12,14 +12,14 @@ class QuotesController < ApplicationController
     if book.user == current_user
       @quote = Quote.new
     else
-      redirect_to book_path(book), alert: 'Sorry, but you can`t create quote to this book.'
+      redirect_to book_path(book), alert: 'Sorry, but you can`t create quote for this book.'
     end
   end
 
   def create
     book = Book.find(params[:book_id])
     if book.user == current_user
-      @quote = Quote.new(text: quote_params[:text])
+      @quote = Quote.new(quote_params)
       @quote.user = current_user if current_user
       @quote.book = book if book
 
@@ -33,7 +33,7 @@ class QuotesController < ApplicationController
         end
       end
     else
-      redirect_to book_path(book), notice: 'Sorry, but you can`t create quotes to this book.'
+      redirect_to book_path(book), notice: 'Sorry, but you can`t create quotes for this book.'
     end
   end
 
@@ -42,7 +42,7 @@ class QuotesController < ApplicationController
     if quote.user == current_user
       @quote = quote
     else
-      redirect_to book_path(book), notice: 'Sorry, but you can`t edit quotes to this book.'
+      redirect_to book_path(book), notice: 'Sorry, but you can`t edit quotes for this book.'
     end
   end
 
@@ -51,7 +51,7 @@ class QuotesController < ApplicationController
     if current_user == @quote.user
       book = Book.find(params[:book_id])
       respond_to do |format|
-        if @quote.update_attributes(text: quote_params[:text])
+        if @quote.update_attributes(quote_params)
           format.html { redirect_to book_path(book), notice: 'Quote was successfully updated.' }
           format.json { render :show, status: :ok, location: book }
         else
@@ -60,7 +60,7 @@ class QuotesController < ApplicationController
         end
       end
     else
-      redirect_to book_path(book), notice: 'Sorry, but you can`t edit quotes to this book.'
+      redirect_to book_path(book), notice: 'Sorry, but you can`t edit quotes for this book.'
     end
   end
 
@@ -74,13 +74,13 @@ class QuotesController < ApplicationController
           format.json { head :no_content }
         end
     else
-      redirect_to book_path(book), notice: 'Sorry, but you can`t delete quotes to this book.'
+      redirect_to book_path(book), notice: 'Sorry, but you can`t delete quotes for this book.'
     end
   end
 
   private
 
   def quote_params
-    params[:quote]
+    params.require(:quote).permit(:id, :text)
   end
 end

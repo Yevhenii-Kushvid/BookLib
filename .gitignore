@@ -45,5 +45,3 @@ db/schema.rb
 /public/.gem/
 /public/outsource_people_app/
 .project
-/log/
-/tmp/
