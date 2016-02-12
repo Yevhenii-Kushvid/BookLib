@@ -8,7 +8,7 @@ class BooksController < ApplicationController
   end
 
   def show
-
+    redirect_to(books_path, alert: 'Sorry, but you can`t see this book.') if @book.is_draft? && current_user != @book.user
   end
 
   def new
@@ -79,7 +79,7 @@ class BooksController < ApplicationController
       @quotes = @book.quotes
       set_genres
     rescue => ex
-      render_500 unless @book
+      redirect_to(books_path, alert: 'Sorry, but something is went wrong with book.') unless @book
     end
   end
 
@@ -87,7 +87,7 @@ class BooksController < ApplicationController
     begin
       @genres = Genre.all
     rescue => ex
-      render_500 unless @genres
+      redirect_to(books_path, alert: 'Sorry, but something is went wrong with genres.') unless @genres
     end
   end
 
