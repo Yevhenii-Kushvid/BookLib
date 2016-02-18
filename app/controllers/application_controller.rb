@@ -2,15 +2,14 @@ class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   before_action :authenticate_user!
-  
+
   protect_from_forgery with: :exception
   
-  @test_var = "<h1>NOTHING TO DO HERE</h1>"
   private
     def render_404
       render file: "public/404.html", status: 404
     end
-    
+
     def render_500
       render file: "public/500.html", status: 500
     end

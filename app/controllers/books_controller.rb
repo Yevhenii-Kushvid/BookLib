@@ -4,7 +4,7 @@ class BooksController < ApplicationController
   before_action :set_book, only: [:show, :edit, :update, :destroy]
 
   def index
-    @books = Book.where("created_at > ? AND is_draft = false", p(Date.today - 7).beginning_of_day)
+    @books = Book.where(is_draft: false)#.where("created_at > ? AND is_draft = false", p(Date.today - 7).beginning_of_day)
   end
 
   def show
