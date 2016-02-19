@@ -36,6 +36,7 @@
 
 # uploads
 /public/system/
+/public/uploads/
 
 /lib/templates/erb/scaffold/_form.html.erb
 /public/assets/

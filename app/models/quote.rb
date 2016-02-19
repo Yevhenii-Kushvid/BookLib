@@ -1,6 +1,6 @@
 class Quote < ActiveRecord::Base
   validates :text, presence: true
 
-  belongs_to :books
-  belongs_to :users
+  belongs_to :book
+  belongs_to :user
 end

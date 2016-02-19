@@ -2,11 +2,12 @@
   <p> <%= @quote.text %> </p>
 </div>
 
+
+<% if @quote.user_id == current_user.id %>
+
 <div class="btn btn-default">
   <%= link_to('Create', new_book_quote_path) %>
 </div>
-
-<% if @quote.user_id == current_user.id %>
 <div class="btn btn-default">
   <%= link_to('Edit', edit_book_quote_path)  %>
 </div>

@@ -2,31 +2,23 @@ require 'date'
 
 class BooksController < ApplicationController
   before_action :set_book, only: [:show, :edit, :update, :destroy]
-  before_action :set_genres, only: [:show, :edit, :update, :destroy]
-  # GET /books
-  # GET /books.json
+
   def index
-    @books = Book.where("created_at > ? AND is_draft = false", p(Date.today - 7).beginning_of_day)
+    @books = Book.where(is_draft: false)#.where("created_at > ? AND is_draft = false", p(Date.today - 7).beginning_of_day)
   end
 
-  # GET /books/1
-  # GET /books/1.json
   def show
-
+    redirect_to(books_path, alert: 'Sorry, but you can`t see this book.') if @book.is_draft? && current_user != @book.user
   end
 
-  # GET /books/new
   def new
     @book = Book.new
   end
 
-  # GET /books/1/edit
   def edit
-    render_500 unless is_creator?
+    redirect_to(book_path(@book), alert: 'Sorry, but you can`t edit this.') unless is_creator?
   end
 
-  # POST /books
-  # POST /books.json
   def create
     @book = Book.new(book_params)
     @book.user_id = current_user.id
@@ -34,7 +26,6 @@ class BooksController < ApplicationController
     respond_to do |format|
       if @book.save
         create_genre_connections
-
         format.html { redirect_to @book, notice: 'Book was successfully created.' }
         format.json { render :show, status: :created, location: @book }
       else
@@ -44,8 +35,6 @@ class BooksController < ApplicationController
     end
   end
 
-  # PATCH/PUT /books/1
-  # PATCH/PUT /books/1.json
   def update
     if is_creator?
 
@@ -62,12 +51,10 @@ class BooksController < ApplicationController
       end
 
     else
-      render_500
+      redirect_to(book_path(@book), alert: 'Sorry, but you can`t edit this book.')
     end
   end
 
-  # DELETE /books/1
-  # DELETE /books/1.json
   def destroy
     if is_creator?
 
@@ -79,7 +66,7 @@ class BooksController < ApplicationController
         format.json { head :no_content }
       end
     else
-      render_500
+      redirect_to(book_path(@book), alert: 'Sorry, but you can`t delete this book.')
     end
   end
 
@@ -89,9 +76,10 @@ class BooksController < ApplicationController
   def set_book
     begin
       @book = Book.find(params[:id])
-      @quotes = @book.quotes.all
+      @quotes = @book.quotes
+      set_genres
     rescue => ex
-      render_500 unless @book
+      redirect_to(books_path, alert: 'Sorry, but something is went wrong with book.') unless @book
     end
   end
 
@@ -99,7 +87,7 @@ class BooksController < ApplicationController
     begin
       @genres = Genre.all
     rescue => ex
-      render_500 unless @genres
+      redirect_to(books_path, alert: 'Sorry, but something is went wrong with genres.') unless @genres
     end
   end
 
@@ -137,7 +125,6 @@ class BooksController < ApplicationController
 
     @genres.each { |genre|
       conns = BookGenre.where(:book_id => @book.id, :genre_id => genre.id)
-      puts "________________________________\n\n\n\n\n\n\n\n\n\n\n"
       conns.each { |e|
         e.destroy
       }

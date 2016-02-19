@@ -1,0 +1,38 @@
+<div class="modal fade in" id="sign_in">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button class="close" data-dismiss="modal">x</button>
+          <h2>Sign in</h2>
+        </div>
+
+        <div class="modal-body">
+          <%= form_for(User.new, url: session_path(:user), class: "form-signin", html:{id: 'sign_in_user', :'data-type' => 'json'}, remote: true) do |f| %>
+          <div>
+            <%= f.label :email %><br />
+            <%= f.email_field :email, autofocus: true, class: "form-control" %>
+          </div>
+
+          <div>
+            <%= f.label :password %><br />
+            <%= f.password_field :password, autocomplete: "off", class: "form-control" %>
+          </div>
+
+          <% if Devise.mappings[:user].rememberable? -%>
+            <div class="field checkbox">
+              <%= f.check_box :remember_me, class: "checkbox" %>
+              <%= f.label :remember_me %>
+            </div>
+          <% end -%>
+
+          <div>
+            <%= f.submit "Sign in", class: "btn btn-lg btn-primary btn-block" %>
+          </div>
+          <% end %>
+        </div>
+      <div class="modal-footer">
+      </div>
+
+    </div>
+  </div>
+</div>
