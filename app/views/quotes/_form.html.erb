@@ -5,11 +5,11 @@
   <%= f.label "Quote #{:method}" %>
   <br>
   <%= f.hidden_field :id %>
-  <%= f.text_area :text %>
+  <%= f.text_area :text, class: "form-control" %>
 </div>
 
 <div class="actions">
-  <%= f.submit %>
+  <%= f.submit class: "btn btn-lg btn-primary btn-block" %>
 </div>
 
 <% end %>
