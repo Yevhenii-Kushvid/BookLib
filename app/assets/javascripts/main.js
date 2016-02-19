@@ -15,7 +15,7 @@ window.my_function = function() {
   });
 };
 */
-
+/*
 $(document).ready(function(){
   $("body").on("click", ".output", function(){
     var email = "pathfinder1994@mail.ru";

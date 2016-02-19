@@ -1,6 +1,6 @@
 class Users::SessionsController < Devise::SessionsController
   before_filter :configure_sign_in_params, only: [:create]
-
+  respond_to :html, :json
   # GET /resource/sign_in
   def new
     super
@@ -8,7 +8,7 @@ class Users::SessionsController < Devise::SessionsController
 
   #POST /resource/sign_in
   def create
-    super  
+    super
   end
 
   # DELETE /resource/sign_out

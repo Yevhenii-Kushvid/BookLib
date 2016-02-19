@@ -3,3 +3,11 @@
   display: block;
   background-color: #f0f0f0;
 }
+
+input{
+  margin: 5px;
+}
+
+.checkbox{
+  margin-left: 30px;
+}
