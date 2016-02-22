@@ -8,6 +8,8 @@ Rails.application.configure do
   config.serve_static_files = ENV['RAILS_SERVE_STATIC_FILES'].present?
   config.assets.js_compressor = :uglifier
 
+  config.assets.compile = true
+
   config.action_mailer.raise_delivery_errors = false
 
   #config.active_support.deprecation = :log
