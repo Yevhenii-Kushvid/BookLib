@@ -3,8 +3,6 @@ $(function() {
     $(".modal-footer").html("");
   });
 
-  $("body").html("dfsdfasdfasdfsdfsdfsdfsd");
-
   return $("form#sign_in_user, form#sign_up_user").bind("ajax:success", function(event, xhr, settings) {
 
     alert("good");
