@@ -9,7 +9,7 @@ class QuoteLikesController < ApplicationController
   end
 
   def new
-
+    render inline: "#{params[:quote_id]}"
   end
 
   def create

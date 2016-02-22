@@ -78,6 +78,16 @@ class QuotesController < ApplicationController
     end
   end
 
+  def like
+    # user = current_user
+    user = User.find(1);
+    quote = Quote.find(2);
+
+    render inline: "#{user.email} | likes: #{user.likes.count} | #{quote.quote_likes.joins(current_user.likes).count}"
+
+    #render inline: "UserLike: #{user.likes.count } <br/> QuoteLike: #{ QuoteLike.where(quote_id: params[:id]).count }".html_safe
+  end
+
   private
 
   def quote_params
