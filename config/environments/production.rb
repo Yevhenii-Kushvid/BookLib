@@ -5,6 +5,9 @@ Rails.application.configure do
   config.consider_all_requests_local       = false
   config.action_controller.perform_caching = true
 
+  config.serve_static_files = ENV['RAILS_SERVE_STATIC_FILES'].present?
+  config.assets.js_compressor = :uglifier
+
   config.action_mailer.raise_delivery_errors = false
 
   #config.active_support.deprecation = :log
@@ -61,7 +64,7 @@ Rails.application.configure do
 
   #config.assets.js_compressor = :uglifier
 
-  
+
   # config.assets.css_compressor = :sass
 
   # Do not fallback to assets pipeline if a precompiled asset is missed.
