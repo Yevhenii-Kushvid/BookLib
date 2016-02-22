@@ -6,10 +6,15 @@ Rails.application.configure do
   config.action_controller.perform_caching = true
 
   config.action_mailer.raise_delivery_errors = false
-  config.active_support.deprecation = :log
-  config.active_record.migration_error = :page_load
+
+  #config.active_support.deprecation = :log
+  config.active_support.deprecation = :notify
+
+  #config.active_record.migration_error = :page_load
+
   config.assets.debug = true
   config.assets.digest = true
+
   config.assets.raise_runtime_errors = true
 
 #============================================================================================================================
@@ -52,7 +57,11 @@ Rails.application.configure do
 
 
   # Compress JavaScripts and CSS.
+
+
   #config.assets.js_compressor = :uglifier
+
+  
   # config.assets.css_compressor = :sass
 
   # Do not fallback to assets pipeline if a precompiled asset is missed.
