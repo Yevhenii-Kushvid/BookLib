@@ -79,11 +79,19 @@ class QuotesController < ApplicationController
   end
 
   def like
-    # user = current_user
-    user = User.find(1);
-    quote = Quote.find(2);
+    # show
+    quote = Quote.find(params[:id])
+    @total_quote_likes = quote.quote_likes.count;
+    @can_i_like_it = quote.quote_likes.joins(current_user.likes).count == 0;
 
-    render inline: "#{user.email} | likes: #{user.likes.count} | #{quote.quote_likes.joins(current_user.likes).count}"
+    # add НУЖНО СДЕЛАТЬ КАК ТРАНЗАКЦИЮ
+    #new_like = Like.new(user_id: current_user.id)
+    #new_like.save
+
+    #new_quote_like = QuoteLike.new(quote_id: params[:id], like_id: new_like.id)
+    #new_quote_like.save
+
+    render inline: "#{current_user.email} | can i like it: #{@can_i_like_it} | likes: #{@total_quote_likes}"
 
     #render inline: "UserLike: #{user.likes.count } <br/> QuoteLike: #{ QuoteLike.where(quote_id: params[:id]).count }".html_safe
   end
