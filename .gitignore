@@ -30,7 +30,6 @@
 
 /lib/templates/erb/scaffold/_form.html.erb
 /public/assets/
-db/schema.rb
 /public/.cache/
 /public/.gem/
 .project
