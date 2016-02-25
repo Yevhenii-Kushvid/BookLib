@@ -1,7 +1,7 @@
 class User < ActiveRecord::Base
-  has_many :quotes, dependent: :destroy
-  has_many :books, dependent: :destroy
-  has_many :likes, dependent: :destroy
+  has_many :quotes, dependent: :delete_all
+  has_many :books, dependent: :delete_all
+  has_many :likes, dependent: :delete_all
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable

@@ -5,6 +5,8 @@ class QuotesController < ApplicationController
 
   def show
     @quote = Quote.find(params[:id])
+    @total_quote_likes = @quote.quote_likes.count
+    @i_can_like_it = current_user.likes.joins( :quote_like ).merge( @quote.quote_likes ).count == 0
   end
 
   def new
@@ -81,21 +83,23 @@ class QuotesController < ApplicationController
   def like
     # show
     @quote = Quote.find(params[:id])
-    @total_quote_likes = @quote.quote_likes.count;
-    @can_i_like_it = current_user.likes.joins( :quote_like ).merge( @quote.quote_likes ).count == 0
+    @total_quote_likes = @quote.quote_likes.count
+    @i_can_like_it = current_user.likes.joins( :quote_like ).merge( @quote.quote_likes ).count == 0
 
     # add НУЖНО СДЕЛАТЬ КАК ТРАНЗАКЦИЮ
-    #new_like = Like.new(user_id: current_user.id)
-    #new_like.save
+    if @i_can_like_it
+      ActiveRecord::Base.transaction do
+        new_like = Like.new(user_id: current_user.id)
+        new_like.save
 
-    #new_quote_like = QuoteLike.new(quote_id: params[:id], like_id: new_like.id)
-    #new_quote_like.save
+        new_quote_like = QuoteLike.new(quote_id: params[:id], like_id: new_like.id)
+        new_quote_like.save
+      end
+    end
 
-    # #{ ( quote.quote_likes ) ? " you ": " not you " }
-
-    render inline: " user_id: #{current_user.id} <br/> can i like it: #{@can_i_like_it} <br/> likes: #{@total_quote_likes} <br/> total user likes: #{current_user.likes.count} <hr/>"
-
-    #render inline: "UserLike: #{user.likes.count } <br/> QuoteLike: #{ QuoteLike.where(quote_id: params[:id]).count }".html_safe
+    #render final like count
+    render inline: "#{@total_quote_likes + 1}" if @i_can_like_it
+    render inline: "" unless @i_can_like_it
   end
 
   private
