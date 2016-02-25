@@ -5,6 +5,8 @@ class QuotesController < ApplicationController
 
   def show
     @quote = Quote.find(params[:id])
+    @total_quote_likes = @quote.quote_likes.count
+    @i_can_like_it = current_user.likes.joins( :quote_like ).merge( @quote.quote_likes ).count == 0
   end
 
   def new
@@ -76,6 +78,28 @@ class QuotesController < ApplicationController
     else
       redirect_to book_path(book), notice: 'Sorry, but you can`t delete quotes for this book.'
     end
+  end
+
+  def like
+    # show
+    @quote = Quote.find(params[:id])
+    @total_quote_likes = @quote.quote_likes.count
+    @i_can_like_it = current_user.likes.joins( :quote_like ).merge( @quote.quote_likes ).count == 0
+
+    # add НУЖНО СДЕЛАТЬ КАК ТРАНЗАКЦИЮ
+    if @i_can_like_it
+      ActiveRecord::Base.transaction do
+        new_like = Like.new(user_id: current_user.id)
+        new_like.save
+
+        new_quote_like = QuoteLike.new(quote_id: params[:id], like_id: new_like.id)
+        new_quote_like.save
+      end
+    end
+
+    #render final like count
+    render inline: "#{@total_quote_likes + 1}" if @i_can_like_it
+    render inline: "" unless @i_can_like_it
   end
 
   private

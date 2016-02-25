@@ -1,0 +1,2 @@
+module QuoteLikesHelper
+end

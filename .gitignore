@@ -16,20 +16,10 @@
 /tmp
 
 # Ignore local configuration
-.rvmrc
-#/config/database.yml
-#/config/social_keys.yml
-#/config/technomir.yml
-#/config/elasticsearch.yml
-#/config/config.yml
-#/config/initializers/appconf.rb
-#/config/secrets.yml
-#/db/schema.rb
 .rspec
 .rvmrc
 
 #unit-tests
-/test/
 
 # rubymine
 /.idea
@@ -40,8 +30,6 @@
 
 /lib/templates/erb/scaffold/_form.html.erb
 /public/assets/
-db/schema.rb
 /public/.cache/
 /public/.gem/
-/public/outsource_people_app/
 .project
