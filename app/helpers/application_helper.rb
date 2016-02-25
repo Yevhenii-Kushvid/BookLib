@@ -14,7 +14,7 @@ module ApplicationHelper
       end
       result = "<div id='error_explanation'><h2>".html_safe + pluralize(object.errors.count, "error").to_s + " prohibited this quote from being saved:</h2><ul>".html_safe + messages.html_safe + "</ul></div>".html_safe
     else
-      result = "message"
+      result = ""
     end
 
 

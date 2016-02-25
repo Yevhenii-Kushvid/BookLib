@@ -1,5 +1,6 @@
 <div>
   <p> <%= @quote.text %> </p>
+  <%= content_tag :div , "likes: #{@total_quote_likes}", value: "#{like_book_quote_path()}", class: ( @i_can_like_it ? "like btn btn-info" : "like btn btn-danger"), style: "float: right;" %>
 </div>
 
 
@@ -13,7 +14,7 @@
 </div>
 
 <div class="btn btn btn-danger">
-  <%= link_to 'Destroy', book_quote_path(@quote.book_id, @quote.id), method: :delete, data: { confirm: 'Are you sure?' }%>
+  <%= link_to 'Destroy', book_quote_path(@quote.book_id, @quote.id), method: :delete %>
 </div>
 
 <% end %>
