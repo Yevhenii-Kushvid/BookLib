@@ -4,5 +4,5 @@ class Quote < ActiveRecord::Base
   belongs_to :book
   belongs_to :user
 
-  has_many :quote_likes, dependent: :delete_all
+  has_many :quote_likes, dependent: :destroy
 end
