@@ -5,6 +5,8 @@ class QuotesController < ApplicationController
 
   def show
     @quote = Quote.find(params[:id])
+    @total_quote_likes = @quote.quote_likes.count
+    @i_can_like_it = current_user.likes.joins( :quote_like ).merge( @quote.quote_likes ).count == 0
   end
 
   def new
@@ -76,6 +78,28 @@ class QuotesController < ApplicationController
     else
       redirect_to book_path(book), notice: 'Sorry, but you can`t delete quotes for this book.'
     end
+  end
+
+  def like
+    # show
+    @quote = Quote.find(params[:id])
+    @total_quote_likes = @quote.quote_likes.count
+
+    # add НУЖНО СДЕЛАТЬ КАК ТРАНЗАКЦИЮ
+    if @quote.can_i_like_it?(current_user)
+      like = Like.create(user: current_user)
+      like.quote = @quote
+
+      # render final like count
+      render inline: "#{@total_quote_likes + 1}"
+    else
+      # remove like form this quote
+      @quote.likes.where(user: current_user).first.destroy if @quote;
+
+      # render final like count
+      render inline: ""
+    end
+
   end
 
   private

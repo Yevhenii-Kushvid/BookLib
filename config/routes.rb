@@ -1,9 +1,12 @@
 Rails.application.routes.draw do
   devise_for :users, controllers: {sessions: 'users/sessions', registrations: 'users/registrations'}
 
+  resources :likes
 
   resources :books do
-    resources :quotes
+    resources :quotes do
+      get "like", on: :member
+    end
   end
 
   patch '/books/:book_id/quotes', controller: 'quotes', action: :update
