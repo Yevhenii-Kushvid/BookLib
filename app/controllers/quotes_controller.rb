@@ -95,11 +95,18 @@ class QuotesController < ApplicationController
         new_quote_like = QuoteLike.new(quote_id: params[:id], like_id: new_like.id)
         new_quote_like.save
       end
+
+      #render final like count
+      render inline: "#{@total_quote_likes + 1}"
+    else
+      # remove like form this quote
+      like = current_user.likes.joins( :quote_like ).merge( @quote.quote_likes ).first if @quote
+      like.destroy;
+
+      #render final like count
+      render inline: ""
     end
 
-    #render final like count
-    render inline: "#{@total_quote_likes + 1}" if @i_can_like_it
-    render inline: "" unless @i_can_like_it
   end
 
   private
