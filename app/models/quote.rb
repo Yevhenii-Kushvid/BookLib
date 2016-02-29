@@ -5,4 +5,9 @@ class Quote < ActiveRecord::Base
   belongs_to :user
 
   has_many :quote_likes, dependent: :destroy
+  has_many :likes, through: :quote_likes
+
+  def can_i_like_it?(current_user)
+    self.likes.where(user: current_user).count == 0
+  end
 end
