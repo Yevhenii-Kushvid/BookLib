@@ -87,7 +87,8 @@ class QuotesController < ApplicationController
 
     # add НУЖНО СДЕЛАТЬ КАК ТРАНЗАКЦИЮ
     if @quote.can_i_like_it?(current_user)
-      Like.create(user: current_user).quote = @quote
+      like = Like.create(user: current_user)
+      like.quote = @quote
 
       # render final like count
       render inline: "#{@total_quote_likes + 1}"
