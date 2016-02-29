@@ -87,13 +87,13 @@ class QuotesController < ApplicationController
 
     # add НУЖНО СДЕЛАТЬ КАК ТРАНЗАКЦИЮ
     if @quote.can_i_like_it?(current_user)
-      @quote.quote_likes.create(like: Like.create(user: current_user))
+      Like.create(user: current_user).quote = @quote
 
       # render final like count
       render inline: "#{@total_quote_likes + 1}"
     else
       # remove like form this quote
-      @quote.likes.where(user: current_user).first.destroy; if @quote;
+      @quote.likes.where(user: current_user).first.destroy if @quote;
 
       # render final like count
       render inline: ""
