@@ -119,7 +119,7 @@ class BooksController < ApplicationController
     }
   end
 
-  def  update_genre_connections
+  def update_genre_connections
     book_genres = params[:genre]
     @genres = Genre.all
 

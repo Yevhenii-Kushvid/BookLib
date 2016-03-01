@@ -84,22 +84,22 @@ class QuotesController < ApplicationController
     # show
     @quote = Quote.find(params[:id])
     @total_quote_likes = @quote.quote_likes.count
-    @i_can_like_it = current_user.likes.joins( :quote_like ).merge( @quote.quote_likes ).count == 0
 
     # add НУЖНО СДЕЛАТЬ КАК ТРАНЗАКЦИЮ
-    if @i_can_like_it
-      ActiveRecord::Base.transaction do
-        new_like = Like.new(user_id: current_user.id)
-        new_like.save
+    if @quote.can_i_like_it?(current_user)
+      like = Like.create(user: current_user)
+      like.quote = @quote
 
-        new_quote_like = QuoteLike.new(quote_id: params[:id], like_id: new_like.id)
-        new_quote_like.save
-      end
+      # render final like count
+      render inline: "#{@total_quote_likes + 1}"
+    else
+      # remove like form this quote
+      @quote.likes.where(user: current_user).first.destroy if @quote;
+
+      # render final like count
+      render inline: ""
     end
 
-    #render final like count
-    render inline: "#{@total_quote_likes + 1}" if @i_can_like_it
-    render inline: "" unless @i_can_like_it
   end
 
   private
